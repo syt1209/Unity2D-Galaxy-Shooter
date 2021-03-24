@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     // state variables
     private Vector3 _startPos = new Vector3(0, 0, 0);
+    [SerializeField] private float _speed = 3.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +17,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Translate(Vector3.right * Time.deltaTime * _speed);
     }
 }
