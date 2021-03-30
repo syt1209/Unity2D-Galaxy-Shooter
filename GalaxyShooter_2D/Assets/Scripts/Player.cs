@@ -8,7 +8,11 @@ public class Player : MonoBehaviour
     private Vector3 _startPos = new Vector3(0, 0, 0);
     [SerializeField] private float _speed = 3.5f;
     private float _xMin = -11.3f, _xMax = 11.3f;
-    private float _yMin = -3.8f,  _yMax = 0; 
+    private float _yMin = -3.8f,  _yMax = 0;
+
+    // cached references
+    [SerializeField]
+    private GameObject _laserPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +22,16 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        Move();
+
+        if (Input.GetKeyDown(KeyCode.Space)) 
+        {
+            Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+        }
+    }
+
+    private void Move()
     {
         Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
 
@@ -36,5 +50,10 @@ public class Player : MonoBehaviour
         // bound in the y-direction
         transform.position = new Vector3(transform.position.x,
             Mathf.Clamp(transform.position.y, _yMin, _yMax), 0);
+    }
+
+    private void Fire()
+    {
+        Instantiate(_laserPrefab, transform.position, Quaternion.identity);
     }
 }
