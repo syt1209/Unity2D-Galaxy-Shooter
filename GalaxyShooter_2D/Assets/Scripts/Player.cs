@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     // state variables
     private Vector3 _startPos = new Vector3(0, 0, 0);
+    [SerializeField] private float _laserSpawnOffset = 0.8f;
     [SerializeField] private float _speed = 3.5f;
     private float _xMin = -11.3f, _xMax = 11.3f;
     private float _yMin = -3.8f,  _yMax = 0;
@@ -27,7 +28,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space)) 
         {
-            Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            Fire();
         }
     }
 
@@ -54,6 +55,6 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
-        Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+        Instantiate(_laserPrefab, transform.position + new Vector3(0, _laserSpawnOffset, 0), Quaternion.identity);
     }
 }
