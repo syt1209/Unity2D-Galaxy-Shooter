@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float _speed = 3.5f;
     private float _xMin = -11.3f, _xMax = 11.3f;
     private float _yMin = -3.8f,  _yMax = 0;
+    [SerializeField] private float _firingDelay = 0.15f;
+    private float _nextFire = -1f;
 
     // cached references
     [SerializeField]
@@ -26,10 +28,7 @@ public class Player : MonoBehaviour
     {
         Move();
 
-        if (Input.GetKeyDown(KeyCode.Space)) 
-        {
-            Fire();
-        }
+        Fire();
     }
 
     private void Move()
@@ -55,6 +54,10 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
-        Instantiate(_laserPrefab, transform.position + new Vector3(0, _laserSpawnOffset, 0), Quaternion.identity);
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)
+        {
+            Instantiate(_laserPrefab, transform.position + new Vector3(0, _laserSpawnOffset, 0), Quaternion.identity);
+            _nextFire = Time.time + _firingDelay;
+        }
     }
 }
