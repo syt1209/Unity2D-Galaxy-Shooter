@@ -227,8 +227,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08eeca43de7e7284489f6d29bb7f8aa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _laserSpawnOffset: 0.8
   _speed: 3.5
+  _life: 3
+  _laserSpawnOffset: 0.8
   _firingDelay: 0.15
   _laserPrefab: {fileID: 1760181307381912856, guid: 6f429864e8da62546937ecaf1872da64,
     type: 3}
@@ -417,12 +418,12 @@ PrefabInstance:
     - target: {fileID: 3488262364974512196, guid: 0807c55488845dc4f95001cc5d138803,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.55
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3488262364974512196, guid: 0807c55488845dc4f95001cc5d138803,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.59
+      value: 4.88
       objectReference: {fileID: 0}
     - target: {fileID: 3488262364974512196, guid: 0807c55488845dc4f95001cc5d138803,
         type: 3}
