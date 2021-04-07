@@ -8,12 +8,16 @@ public class SpawnManager : MonoBehaviour
     // cached reference
     [SerializeField]
     private GameObject _enemyPrefab;
+    private Transform _enemyContainer;
+
+    // config variables
     [SerializeField]
     private WaitForSeconds _enemySpawnDelay = new WaitForSeconds(3.0f);
 
     // Start is called before the first frame update
     void Start()
     {
+        _enemyContainer = transform.Find("EnemyContainer").GetComponent<Transform>();
         StartCoroutine(EnemySpawnRoutine());
     }
 
@@ -22,7 +26,8 @@ public class SpawnManager : MonoBehaviour
         while (true)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
-            GameObject _newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
+            GameObject _newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity, _enemyContainer);
+            //_newEnemy.transform.parent = _enemyContainer;
 
             yield return _enemySpawnDelay;
         }
