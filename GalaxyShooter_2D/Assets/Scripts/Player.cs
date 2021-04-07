@@ -19,11 +19,18 @@ public class Player : MonoBehaviour
     // cached references
     [SerializeField]
     private GameObject _laserPrefab;
+    private SpawnManager _spawnManager;
 
     // Start is called before the first frame update
     void Start()
     {
         transform.position = _startPos;
+
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        if (_spawnManager is null)
+        {
+            Debug.LogError("Null object");
+        }
     }
 
     // Update is called once per frame
@@ -72,6 +79,7 @@ public class Player : MonoBehaviour
 
         if (_life < 1)
         {
+            _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
     }

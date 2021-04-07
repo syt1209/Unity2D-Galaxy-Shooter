@@ -13,6 +13,7 @@ public class SpawnManager : MonoBehaviour
     // config variables
     [SerializeField]
     private WaitForSeconds _enemySpawnDelay = new WaitForSeconds(3.0f);
+    private bool _stopSpawning = false;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,7 @@ public class SpawnManager : MonoBehaviour
 
     private IEnumerator EnemySpawnRoutine()
     {
-        while (true)
+        while (_stopSpawning is false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
             GameObject _newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity, _enemyContainer);
@@ -31,6 +32,11 @@ public class SpawnManager : MonoBehaviour
 
             yield return _enemySpawnDelay;
         }
+    }
+
+    public void OnPlayerDeath()
+    {
+        _stopSpawning = true;
     }
     
 }
