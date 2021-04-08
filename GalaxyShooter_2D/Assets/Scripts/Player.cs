@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     private Vector3 _startPos = new Vector3(0, 0, 0);
     [SerializeField] private float _speed = 3.5f;
     [SerializeField] private int _life = 3;
+    [SerializeField] private bool _isTripleShotActive = false;
+    private WaitForSeconds _powerDownTime = new WaitForSeconds(5.0f);
 
     // config variables
     [SerializeField] private float _laserSpawnOffset = 0.8f;
@@ -17,8 +19,8 @@ public class Player : MonoBehaviour
     private float _nextFire = -1f;
 
     // cached references
-    [SerializeField]
-    private GameObject _laserPrefab;
+    [SerializeField] private GameObject _laserPrefab, _tripleShotPrefab;
+
     private SpawnManager _spawnManager;
 
     // Start is called before the first frame update
@@ -67,6 +69,11 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)
         {
+            if (_isTripleShotActive is true)
+            {
+                Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+                return;
+            }
             Instantiate(_laserPrefab, transform.position + new Vector3(0, _laserSpawnOffset, 0), Quaternion.identity);
             _nextFire = Time.time + _firingDelay;
         }
@@ -82,5 +89,18 @@ public class Player : MonoBehaviour
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
+    }
+
+    // TripleShot powerup
+    public void TripleShotActive()
+    {
+        _isTripleShotActive = true;
+        StartCoroutine(TripleShotPowerDownRoutine());
+    }
+
+    private IEnumerator TripleShotPowerDownRoutine()
+    {
+        yield return _powerDownTime;
+        _isTripleShotActive = false;
     }
 }
