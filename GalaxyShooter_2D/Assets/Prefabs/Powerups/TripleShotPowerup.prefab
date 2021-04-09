@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2511963637488895745}
   - component: {fileID: 2511963637488895747}
   - component: {fileID: 2511963637488895744}
+  - component: {fileID: 977128892}
   m_Layer: 0
   m_Name: TripleShotPowerup
   m_TagString: Untagged
@@ -62,6 +63,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.1079497, y: 1.4917707, z: 1}
   m_Center: {x: 0.0059972107, y: 0.2578802, z: 0}
+--- !u!114 &977128892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2511963637488895750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab0e6cd932237354897ebd02561f6424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 3
 --- !u!1 &2511963638930613174
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,6 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2511963638930613169}
   - component: {fileID: 2511963638930613168}
+  - component: {fileID: 1412213006}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -143,3 +158,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1412213006
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2511963638930613174}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c70ba5e2beb664e4eb2d7c4293df8ce1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
