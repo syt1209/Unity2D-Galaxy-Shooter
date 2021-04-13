@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _speed = 3.5f;
     private float _speedMultipler = 2f;
     [SerializeField] private int _life = 3;
-    [SerializeField] private bool _isTripleShotActive = false; 
+    [SerializeField] private bool _isTripleShotActive = false, _isShieldActive = false; 
     private WaitForSeconds _powerDownTime = new WaitForSeconds(5.0f);
 
     // config variables
@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
 
     // cached references
     [SerializeField] private GameObject _laserPrefab, _tripleShotPrefab;
+    [SerializeField] private GameObject _shieldVisualizer;
 
     private SpawnManager _spawnManager;
 
@@ -83,6 +84,13 @@ public class Player : MonoBehaviour
     // public methods
     public void Damage()
     {
+        if (_isShieldActive is true)
+        {
+            _isShieldActive = false;
+            _shieldVisualizer.SetActive(false);
+            return; 
+        }
+
         _life--;
 
         if (_life < 1)
@@ -116,5 +124,12 @@ public class Player : MonoBehaviour
     {
         yield return _powerDownTime;
         _speed /= _speedMultipler;
+    }
+
+    // Shield powerup
+    public void ShieldActive()
+    {
+        _isShieldActive = true;
+        _shieldVisualizer.SetActive(true);
     }
 }
