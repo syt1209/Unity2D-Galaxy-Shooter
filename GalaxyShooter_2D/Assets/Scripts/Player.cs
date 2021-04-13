@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     // cached references
     [SerializeField] private GameObject _laserPrefab, _tripleShotPrefab;
     [SerializeField] private GameObject _shieldVisualizer;
+    private Animator _playerAnim;
 
     private SpawnManager _spawnManager;
 
@@ -35,6 +36,8 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Null object");
         }
+
+        _playerAnim = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -48,7 +51,9 @@ public class Player : MonoBehaviour
     // private methods
     private void Move()
     {
-        Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+        Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxis("Vertical"), 0);
+
+        _playerAnim.SetFloat("turn_direction", direction.x);
 
         transform.Translate(direction * _speed * Time.deltaTime);
 
