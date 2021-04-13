@@ -7,8 +7,9 @@ public class Player : MonoBehaviour
     // state variables
     private Vector3 _startPos = new Vector3(0, 0, 0);
     [SerializeField] private float _speed = 3.5f;
+    private float _speedMultipler = 2f;
     [SerializeField] private int _life = 3;
-    [SerializeField] private bool _isTripleShotActive = false;
+    [SerializeField] private bool _isTripleShotActive = false; 
     private WaitForSeconds _powerDownTime = new WaitForSeconds(5.0f);
 
     // config variables
@@ -102,5 +103,18 @@ public class Player : MonoBehaviour
     {
         yield return _powerDownTime;
         _isTripleShotActive = false;
+    }
+
+    // Speed powerup
+    public void SpeedBoostActive()
+    {
+        _speed *= _speedMultipler;
+        StartCoroutine(SpeedPowerDownRoutine());
+    }
+
+    private IEnumerator SpeedPowerDownRoutine()
+    {
+        yield return _powerDownTime;
+        _speed /= _speedMultipler;
     }
 }
