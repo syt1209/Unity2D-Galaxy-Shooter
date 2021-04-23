@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     private Vector3 _startPos = new Vector3(0, 0, 0);
     [SerializeField] private float _speed = 3.5f;
     private float _speedMultipler = 2f;
-    [SerializeField] private int _life = 3;
+    [SerializeField] private int _life = 3, _score = 0;
     [SerializeField] private bool _isTripleShotActive = false, _isShieldActive = false; 
     private WaitForSeconds _powerDownTime = new WaitForSeconds(5.0f);
 
@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     // cached references
     [SerializeField] private GameObject _laserPrefab, _tripleShotPrefab;
     [SerializeField] private GameObject _shieldVisualizer;
+    private UIManager _uiManager;
     private Animator _playerAnim;
 
     private SpawnManager _spawnManager;
@@ -38,6 +39,12 @@ public class Player : MonoBehaviour
         }
 
         _playerAnim = GetComponentInChildren<Animator>();
+
+        _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        if (_uiManager is null)
+        {
+            Debug.LogError("UIManager is NULL");
+        }
     }
 
     // Update is called once per frame
@@ -97,12 +104,20 @@ public class Player : MonoBehaviour
         }
 
         _life--;
+        _uiManager.UpdateLifeImage(_life);
 
         if (_life < 1)
         {
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
+    }
+
+    public void AddScore(int points)
+    {
+        _score += points;
+        _uiManager.UpdateScoreText(_score);
+
     }
 
     // TripleShot powerup

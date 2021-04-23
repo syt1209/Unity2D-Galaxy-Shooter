@@ -6,7 +6,20 @@ public class Enemy : MonoBehaviour
 {
     // state variables
     [SerializeField] private float _enemySpeed = 4.0f;
+    [SerializeField] private int _enemyPoints = 10;
     private float _yMin = -5f, _yMax = 7f, _xMin = -8f, _xMax = 8f;
+
+    // cached reference
+    private Player _player;
+
+    private void Start()
+    {
+        _player = GameObject.Find("Player").GetComponent<Player>();
+        if (_player is null)
+        {
+            Debug.LogError("Player is NULL");
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -29,11 +42,8 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag is "Player") 
         {
-            Player player = other.transform.GetComponent<Player>() as Player;
-            if (player != null)
-            {
-                player.Damage();
-            }
+            _player.Damage();
+            _player.AddScore(_enemyPoints);
 
             Destroy(this.gameObject);
         }
@@ -41,6 +51,9 @@ public class Enemy : MonoBehaviour
         if (other.tag is "Laser")
         {
             Destroy(other.gameObject);
+
+            _player.AddScore(_enemyPoints);
+
             Destroy(this.gameObject);
         }
     }
