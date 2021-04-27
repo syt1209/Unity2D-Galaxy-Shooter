@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     // cached reference
-    [SerializeField] private Text _scoreText, _gameoverText;
+    [SerializeField] private Text _scoreText, _gameoverText, _restartText;
     [SerializeField] private Image _lifeImage;
+    [SerializeField] private GameManager _gameManager;
 
     // config variables
     [SerializeField] private Sprite[] _lifeSprite;
@@ -17,6 +18,7 @@ public class UIManager : MonoBehaviour
     {
         _scoreText.text = "Score: " + 0;
         _gameoverText.gameObject.SetActive(false);
+        _restartText.gameObject.SetActive(false);
     }
 
     public void UpdateScoreText(int score)
@@ -38,6 +40,9 @@ public class UIManager : MonoBehaviour
     {
         _gameoverText.gameObject.SetActive(true);
         StartCoroutine(GameOverFlickrRoutine());
+
+        _restartText.gameObject.SetActive(true);
+        _gameManager.GameOver();
     }
 
     private IEnumerator GameOverFlickrRoutine()
