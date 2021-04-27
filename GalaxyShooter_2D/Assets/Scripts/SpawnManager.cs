@@ -21,8 +21,6 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         _enemyContainer = transform.Find("EnemyContainer").GetComponent<Transform>();
-        StartCoroutine(EnemySpawnRoutine());
-        StartCoroutine(PowerUpSpawnRoutine());
     }
 
     // private methods
@@ -30,6 +28,7 @@ public class SpawnManager : MonoBehaviour
     // Enemy related
     private IEnumerator EnemySpawnRoutine()
     {
+        yield return new WaitForSeconds(2.0f);
         while (_stopSpawning is false)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
@@ -42,6 +41,7 @@ public class SpawnManager : MonoBehaviour
     // Powerup related
     private IEnumerator PowerUpSpawnRoutine()
     {
+        yield return new WaitForSeconds(2.0f);
         while (_stopSpawning is false)
         { 
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
@@ -57,5 +57,11 @@ public class SpawnManager : MonoBehaviour
     {
         _stopSpawning = true;
     }
-    
+
+    public void StartSpawnRoutine()
+    {
+        StartCoroutine(EnemySpawnRoutine());
+        StartCoroutine(PowerUpSpawnRoutine());
+    }
+
 }
