@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     private Player _player;
     private Animator _anim;
     private Collider _collider;
+    private AudioSource _audioSource;
 
     private void Start()
     {
@@ -32,6 +33,12 @@ public class Enemy : MonoBehaviour
         if (_collider is null)
         {
             Debug.LogError("Collider is NULL");
+        }
+
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource is null)
+        {
+            Debug.LogError("Enemy Audio Source is NULL");
         }
     }
 
@@ -75,6 +82,8 @@ public class Enemy : MonoBehaviour
 
         _anim.SetTrigger("OnEnemyDeath");
         Destroy(_collider);
+
+        _audioSource.Play();
         Destroy(this.gameObject, 1f);
     }
 }

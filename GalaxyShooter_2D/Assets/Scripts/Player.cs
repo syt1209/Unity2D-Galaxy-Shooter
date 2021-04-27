@@ -23,9 +23,10 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _laserPrefab, _tripleShotPrefab;
     [SerializeField] private GameObject _shieldVisualizer;
     [SerializeField] private GameObject _leftEngineFailure, _rightEngineFailure;
+    [SerializeField] private AudioClip _laserSoundClip;
+    private AudioSource _audioSource;
     private UIManager _uiManager;
     private Animator _playerAnim;
-
     private SpawnManager _spawnManager;
 
     // Start is called before the first frame update
@@ -45,6 +46,12 @@ public class Player : MonoBehaviour
         if (_uiManager is null)
         {
             Debug.LogError("UIManager is NULL");
+        }
+
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource is null)
+        {
+            Debug.LogError("Player Audio Source is NULL.");
         }
 
         _leftEngineFailure.SetActive(false);
@@ -88,12 +95,15 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)
         {
+            _audioSource.clip = _laserSoundClip;
             if (_isTripleShotActive is true)
             {
                 Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+                _audioSource.Play();
                 return;
             }
             Instantiate(_laserPrefab, transform.position + new Vector3(0, _laserSpawnOffset, 0), Quaternion.identity);
+            _audioSource.Play();
             _nextFire = Time.time + _firingDelay;
         }
     }

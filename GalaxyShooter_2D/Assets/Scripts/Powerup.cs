@@ -7,6 +7,7 @@ public class Powerup : MonoBehaviour
     // state variables
     [SerializeField] private float _speed = 3.0f;
     [SerializeField] private int _powerupID;
+    [SerializeField] private AudioClip _powerupClip;
 
     // config variables
     private float _yMin = -4.5f;
@@ -49,6 +50,8 @@ public class Powerup : MonoBehaviour
                         break;
                 }
             }
+
+            AudioSource.PlayClipAtPoint(_powerupClip, transform.position);
 
             Destroy(this.gameObject);
         }
