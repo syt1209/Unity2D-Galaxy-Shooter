@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     // cached references
     [SerializeField] private GameObject _laserPrefab, _tripleShotPrefab;
     [SerializeField] private GameObject _shieldVisualizer;
+    [SerializeField] private GameObject _leftEngineFailure, _rightEngineFailure;
     private UIManager _uiManager;
     private Animator _playerAnim;
 
@@ -45,6 +46,10 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("UIManager is NULL");
         }
+
+        _leftEngineFailure.SetActive(false);
+        _rightEngineFailure.SetActive(false);
+        _shieldVisualizer.SetActive(false);
     }
 
     // Update is called once per frame
@@ -105,6 +110,22 @@ public class Player : MonoBehaviour
 
         _life--;
         _uiManager.UpdateLifeImage(_life);
+
+        switch (_life)
+        {
+            case 1:
+                _leftEngineFailure.SetActive(true);
+                _rightEngineFailure.SetActive(true);
+                break;
+            case 2:
+                _leftEngineFailure.SetActive(true);
+                _rightEngineFailure.SetActive(false);
+                break;
+            default:
+                _leftEngineFailure.SetActive(false);
+                _rightEngineFailure.SetActive(false);
+                break;
+        }
 
         if (_life < 1)
         {
