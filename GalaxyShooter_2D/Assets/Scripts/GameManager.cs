@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Restart game");
         _isGameOver = false;
-        SceneManager.LoadScene(0); // 0-Game scene
+        SceneManager.LoadScene(1); // 1-Game scene
     }
 
     // public methods
