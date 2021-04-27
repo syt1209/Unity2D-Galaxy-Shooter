@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
 
     // cached reference
     private Player _player;
+    private Animator _anim;
+    private Collider _collider;
 
     private void Start()
     {
@@ -18,6 +20,18 @@ public class Enemy : MonoBehaviour
         if (_player is null)
         {
             Debug.LogError("Player is NULL");
+        }
+
+        _anim = GetComponentInChildren<Animator>();
+        if (_anim is null)
+        {
+            Debug.LogError("EnemyExplosion Animator is NULL");
+        }
+
+        _collider = GetComponent<Collider>();
+        if (_collider is null)
+        {
+            Debug.LogError("Collider is NULL");
         }
     }
 
@@ -43,18 +57,24 @@ public class Enemy : MonoBehaviour
         if (other.tag is "Player") 
         {
             _player.Damage();
-            _player.AddScore(_enemyPoints);
 
-            Destroy(this.gameObject);
+            EnemyDeathSequence();
         }
 
         if (other.tag is "Laser")
         {
             Destroy(other.gameObject);
 
-            _player.AddScore(_enemyPoints);
-
-            Destroy(this.gameObject);
+            EnemyDeathSequence();
         }
+    }
+
+    private void EnemyDeathSequence()
+    {
+        _player.AddScore(_enemyPoints);
+
+        _anim.SetTrigger("OnEnemyDeath");
+        Destroy(_collider);
+        Destroy(this.gameObject, 1f);
     }
 }
