@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     private float _yMin = -3.8f,  _yMax = 0;
     [SerializeField] private float _firingDelay = 0.15f, _thrustDelay = 1f;
     private float _nextFire = -1f, _nextThrust = -1f;
+    [SerializeField] private float _shakeDuration = 0.5f;
 
     // cached references
     [SerializeField] private GameObject _laserPrefab, _tripleShotPrefab;
@@ -30,6 +31,7 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
     private Animator _playerAnim;
     private SpawnManager _spawnManager;
+    private CameraShake _cameraShake;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +56,12 @@ public class Player : MonoBehaviour
         if (_audioSource is null)
         {
             Debug.LogError("Player Audio Source is NULL.");
+        }
+
+        _cameraShake = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraShake>();
+        if (_cameraShake is null)
+        {
+            Debug.LogError("Camera Shake is NULL");
         }
 
         _leftEngineFailure.SetActive(false);
@@ -156,6 +164,7 @@ public class Player : MonoBehaviour
             return; 
         }
 
+        StartCoroutine(_cameraShake.CameraShakeRoutine(_shakeDuration));
         _life--;
         _uiManager.UpdateLifeImage(_life);
 
@@ -178,7 +187,7 @@ public class Player : MonoBehaviour
         if (_life < 1)
         {
             _spawnManager.OnPlayerDeath();
-            Destroy(this.gameObject);
+            Destroy(this.gameObject, 0.5f);
         }
     }
 
