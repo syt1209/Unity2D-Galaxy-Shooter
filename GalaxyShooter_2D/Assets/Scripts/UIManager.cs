@@ -7,11 +7,11 @@ public class UIManager : MonoBehaviour
 {
     // cached reference
     [SerializeField] private Text _scoreText, _gameoverText, _restartText;
-    [SerializeField] private Image _lifeImage, _thrusterFillImage;
+    [SerializeField] private Image _lifeImage, _thrusterFillImage, _ammoImage;
     [SerializeField] private GameManager _gameManager;
 
     // config variables
-    [SerializeField] private Sprite[] _lifeSprite;
+    [SerializeField] private Sprite[] _lifeSprite, _ammoSprite;
     private WaitForSeconds _flickerWait = new WaitForSeconds(0.5f);
     // Start is called before the first frame update
     void Start()
@@ -34,6 +34,11 @@ public class UIManager : MonoBehaviour
         {
             GameOverSequence();
         }
+    }
+
+    public void UpdateAmmoImage(int ammo)
+    {
+        _ammoImage.sprite = _ammoSprite[ammo];
     }
 
     public void UpdateThrusterHUD(float fillAmount)

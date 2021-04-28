@@ -142,6 +142,8 @@ public class Player : MonoBehaviour
             _audioSource.clip = _ammoOutSoundClip;
             _audioSource.Play();
         }
+
+        _uiManager.UpdateAmmoImage(_ammo);
     }
 
     // public methods
