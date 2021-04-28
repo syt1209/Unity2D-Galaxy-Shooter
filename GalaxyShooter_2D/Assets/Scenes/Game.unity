@@ -334,6 +334,7 @@ MonoBehaviour:
   _acceleration: 1
   _life: 3
   _score: 0
+  _ammo: 15
   _isTripleShotActive: 0
   _isShieldActive: 0
   _laserSpawnOffset: 0.8
@@ -347,6 +348,7 @@ MonoBehaviour:
   _leftEngineFailure: {fileID: 1707123171}
   _rightEngineFailure: {fileID: 1863114236}
   _laserSoundClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
+  _ammoOutSoundClip: {fileID: 8300000, guid: d39ac94c9cf1c41478365024de943245, type: 3}
 --- !u!1 &178921138
 GameObject:
   m_ObjectHideFlags: 0

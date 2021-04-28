@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _acceleration = 1f;
     private float _minSpeed = 3.5f, _maxSpeed = 7.0f;
     private float _speedMultipler = 2f;
-    [SerializeField] private int _life = 3, _score = 0;
+    [SerializeField] private int _life = 3, _score = 0, _ammo = 15;
     [SerializeField] private bool _isTripleShotActive = false, _isShieldActive = false; 
     private WaitForSeconds _powerDownTime = new WaitForSeconds(5.0f);
 
@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _laserPrefab, _tripleShotPrefab;
     [SerializeField] private GameObject _shieldVisualizer;
     [SerializeField] private GameObject _leftEngineFailure, _rightEngineFailure;
-    [SerializeField] private AudioClip _laserSoundClip;
+    [SerializeField] private AudioClip _laserSoundClip, _ammoOutSoundClip;
     private AudioSource _audioSource;
     private UIManager _uiManager;
     private Animator _playerAnim;
@@ -122,8 +122,9 @@ public class Player : MonoBehaviour
 
     private void Fire()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)
+        if (_ammo > 0 && Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)
         {
+            _ammo--;
             _audioSource.clip = _laserSoundClip;
             if (_isTripleShotActive is true)
             {
@@ -134,6 +135,12 @@ public class Player : MonoBehaviour
             Instantiate(_laserPrefab, transform.position + new Vector3(0, _laserSpawnOffset, 0), Quaternion.identity);
             _audioSource.Play();
             _nextFire = Time.time + _firingDelay;
+        }
+
+        if (_ammo <= 0 && Input.GetKeyDown(KeyCode.Space))
+        {
+            _audioSource.clip = _ammoOutSoundClip;
+            _audioSource.Play();
         }
     }
 
