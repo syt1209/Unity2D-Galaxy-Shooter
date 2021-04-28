@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     // state variables
     private Vector3 _startPos = new Vector3(0, 0, 0);
     [SerializeField] private float _speed = 3.5f;
+    [SerializeField] private float _acceleration = 1f;
+    private float _minSpeed = 3.5f, _maxSpeed = 7.0f;
     private float _speedMultipler = 2f;
     [SerializeField] private int _life = 3, _score = 0;
     [SerializeField] private bool _isTripleShotActive = false, _isShieldActive = false; 
@@ -74,6 +76,16 @@ public class Player : MonoBehaviour
 
         _playerAnim.SetFloat("turn_direction", direction.x);
 
+        //check for acceleration & decceleration and adjust speed accordingly
+        if (Input.GetKey(KeyCode.LeftShift) && _speed < _maxSpeed)
+        {
+            Accelerate();
+        }
+        else if (_speed > _minSpeed)
+        {
+            Decelerate();
+        }
+
         transform.Translate(direction * _speed * Time.deltaTime);
 
         // bound in the x-direction
@@ -89,6 +101,16 @@ public class Player : MonoBehaviour
         // bound in the y-direction
         transform.position = new Vector3(transform.position.x,
             Mathf.Clamp(transform.position.y, _yMin, _yMax), 0);
+    }
+
+    private void Accelerate()
+    {
+        _speed += _acceleration * Time.deltaTime;
+    }
+
+    private void Decelerate()
+    {
+        _speed -= _acceleration * Time.deltaTime;
     }
 
     private void Fire()
