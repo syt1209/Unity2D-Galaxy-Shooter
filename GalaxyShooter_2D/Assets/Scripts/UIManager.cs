@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
 {
     // cached reference
     [SerializeField] private Text _scoreText, _gameoverText, _restartText;
-    [SerializeField] private Image _lifeImage;
+    [SerializeField] private Image _lifeImage, _thrusterFillImage;
     [SerializeField] private GameManager _gameManager;
 
     // config variables
@@ -34,6 +34,11 @@ public class UIManager : MonoBehaviour
         {
             GameOverSequence();
         }
+    }
+
+    public void UpdateThrusterHUD(float fillAmount)
+    {
+        _thrusterFillImage.fillAmount = fillAmount;
     }
 
     private void GameOverSequence()

@@ -18,8 +18,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float _laserSpawnOffset = 0.8f;
     private float _xMin = -11.3f, _xMax = 11.3f;
     private float _yMin = -3.8f,  _yMax = 0;
-    [SerializeField] private float _firingDelay = 0.15f;
-    private float _nextFire = -1f;
+    [SerializeField] private float _firingDelay = 0.15f, _thrustDelay = 1f;
+    private float _nextFire = -1f, _nextThrust = -1f;
 
     // cached references
     [SerializeField] private GameObject _laserPrefab, _tripleShotPrefab;
@@ -76,15 +76,20 @@ public class Player : MonoBehaviour
 
         _playerAnim.SetFloat("turn_direction", direction.x);
 
-        //check for acceleration & decceleration and adjust speed accordingly
-        if (Input.GetKey(KeyCode.LeftShift) && _speed < _maxSpeed)
+        // thrusting behavior
+        if (Input.GetKey(KeyCode.LeftShift) && _speed < _maxSpeed && Time.time > _nextThrust)
         {
             Accelerate();
         }
         else if (_speed > _minSpeed)
         {
+            _nextThrust = Time.time + _thrustDelay;
             Decelerate();
         }
+
+
+        float thrusterFillAmount = (_speed - _minSpeed)/_minSpeed;
+        _uiManager.UpdateThrusterHUD(thrusterFillAmount);
 
         transform.Translate(direction * _speed * Time.deltaTime);
 
@@ -102,6 +107,8 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(transform.position.x,
             Mathf.Clamp(transform.position.y, _yMin, _yMax), 0);
     }
+
+
 
     private void Accelerate()
     {
