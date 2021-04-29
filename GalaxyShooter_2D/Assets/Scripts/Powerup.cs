@@ -65,6 +65,9 @@ public class Powerup : MonoBehaviour
                     case 2:
                         player.ShieldActive();
                         break;
+                    case 3:
+                        player.AmmoCollected();
+                        break;
                     default:
                         Debug.Log("ID" + _powerupID + "not found");
                         break;

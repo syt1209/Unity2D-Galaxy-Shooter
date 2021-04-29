@@ -247,4 +247,9 @@ public class Player : MonoBehaviour
         _shieldVisualizer.GetComponent<Renderer>().material.color = Color.cyan;
         _shieldStrength = 3;
     }
+
+    public void AmmoCollected()
+    {
+        _ammo = 15;
+    }
 }
