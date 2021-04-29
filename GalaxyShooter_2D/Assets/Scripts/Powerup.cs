@@ -8,13 +8,33 @@ public class Powerup : MonoBehaviour
     [SerializeField] private float _speed = 3.0f;
     [SerializeField] private int _powerupID;
     [SerializeField] private AudioClip _powerupClip;
+    private float _speedTowardsPlayer = 5.0f;
 
     // config variables
     private float _yMin = -4.5f;
 
+    // cached reference
+    private Transform _playerTransform;
+
+    private void Start()
+    {
+        _playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        if (_playerTransform is null)
+        {
+            Debug.LogError("Player Transform is NULL");
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
+        // player collects powerup
+        if (Input.GetKey(KeyCode.C))
+        {
+            transform.position = Vector3.MoveTowards(transform.position, _playerTransform.position, _speedTowardsPlayer * Time.deltaTime);
+            return;
+        }
+        
         MoveDown();
     }
 
