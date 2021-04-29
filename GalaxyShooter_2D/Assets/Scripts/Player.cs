@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int _life = 3, _score = 0, _ammo = 15;
     [SerializeField] private bool _isTripleShotActive = false, _isShieldActive = false; 
     private WaitForSeconds _powerDownTime = new WaitForSeconds(5.0f);
+    [SerializeField] private int _shieldStrength = 3;
 
     // config variables
     [SerializeField] private float _laserSpawnOffset = 0.8f;
@@ -159,8 +160,22 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive is true)
         {
-            _isShieldActive = false;
-            _shieldVisualizer.SetActive(false);
+            Renderer shieldRD = _shieldVisualizer.GetComponent<Renderer>();
+            _shieldStrength--;
+            switch (_shieldStrength)
+            {
+                case 0:
+                    _isShieldActive = false;
+                    _shieldVisualizer.SetActive(false);
+                    break;
+                case 1:
+                    shieldRD.material.color = Color.red;
+                    break;
+                case 2:
+                    shieldRD.material.color = Color.yellow;
+                    break;
+            }
+
             return; 
         }
 
@@ -229,5 +244,7 @@ public class Player : MonoBehaviour
     {
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
+        _shieldVisualizer.GetComponent<Renderer>().material.color = Color.cyan;
+        _shieldStrength = 3;
     }
 }

@@ -337,10 +337,10 @@ MonoBehaviour:
   _ammo: 15
   _isTripleShotActive: 0
   _isShieldActive: 0
+  _shieldStrength: 3
   _laserSpawnOffset: 0.8
   _firingDelay: 0.15
   _thrustDelay: 1
-  _shakeMagnitude: 1
   _shakeDuration: 0.2
   _laserPrefab: {fileID: 1760181307381912856, guid: 6f429864e8da62546937ecaf1872da64,
     type: 3}
