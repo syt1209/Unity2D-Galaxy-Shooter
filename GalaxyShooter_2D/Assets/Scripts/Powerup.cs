@@ -71,6 +71,9 @@ public class Powerup : MonoBehaviour
                     case 4:
                         player.LifeCollected();
                         break;
+                    case 5:
+                        player.MultiDirectionActive();
+                        break;
                     default:
                         Debug.Log("ID" + _powerupID + "not found");
                         break;

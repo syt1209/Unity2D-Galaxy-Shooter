@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     private float _minSpeed = 3.5f, _maxSpeed = 7.0f;
     private float _speedMultipler = 2f;
     [SerializeField] private int _life = 3, _score = 0, _ammo = 15;
-    [SerializeField] private bool _isTripleShotActive = false, _isShieldActive = false; 
+    [SerializeField] private bool _isTripleShotActive = false, _isMultiDirectionActive = false, _isShieldActive = false; 
     private WaitForSeconds _powerDownTime = new WaitForSeconds(5.0f);
     [SerializeField] private int _shieldStrength = 3;
 
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _shakeDuration = 0.5f;
 
     // cached references
-    [SerializeField] private GameObject _laserPrefab, _tripleShotPrefab;
+    [SerializeField] private GameObject _laserPrefab, _tripleShotPrefab, _multiDirectionPrefab;
     [SerializeField] private GameObject _shieldVisualizer;
     [SerializeField] private GameObject _leftEngineFailure, _rightEngineFailure;
     [SerializeField] private AudioClip _laserSoundClip, _ammoOutSoundClip;
@@ -135,12 +135,22 @@ public class Player : MonoBehaviour
         {
             _ammo--;
             _audioSource.clip = _laserSoundClip;
+
+            // Triple Shot
             if (_isTripleShotActive is true)
             {
                 Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
                 _audioSource.Play();
                 return;
             }
+            // Multi Direction Shot
+            if (_isMultiDirectionActive is true)
+            {
+                Instantiate(_multiDirectionPrefab, transform.position, Quaternion.identity);
+                _audioSource.Play();
+                return;
+            }
+
             Instantiate(_laserPrefab, transform.position + new Vector3(0, _laserSpawnOffset, 0), Quaternion.identity);
             _audioSource.Play();
             _nextFire = Time.time + _firingDelay;
@@ -223,14 +233,24 @@ public class Player : MonoBehaviour
     public void TripleShotActive()
     {
         _isTripleShotActive = true;
-        StartCoroutine(TripleShotPowerDownRoutine());
+        _isMultiDirectionActive = false;
+        StartCoroutine(SpecialWeaponPowerDownRoutine(_isTripleShotActive));
     }
 
-    private IEnumerator TripleShotPowerDownRoutine()
+    public void MultiDirectionActive()
+    {
+        _isMultiDirectionActive = true;
+        _isTripleShotActive = false;
+        StartCoroutine(SpecialWeaponPowerDownRoutine(_isMultiDirectionActive));
+    }
+
+    private IEnumerator SpecialWeaponPowerDownRoutine(bool isWeaponActive)
     {
         yield return _powerDownTime;
-        _isTripleShotActive = false;
+        isWeaponActive = false;
     }
+
+    // MultiDirection powerup
 
     // Speed powerup
     public void SpeedBoostActive()

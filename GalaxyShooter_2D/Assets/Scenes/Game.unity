@@ -173,6 +173,7 @@ MonoBehaviour:
   - {fileID: 6108722622734746505, guid: d58de3b4f1031354e8d19c7e17aa0c58, type: 3}
   - {fileID: 2651010886289341821, guid: fa5cb65bc04ca1741ae53cc0781658d5, type: 3}
   - {fileID: 7107151353808627993, guid: 1f29c3c54b719f04d9e8e5f6b4260884, type: 3}
+  - {fileID: 7665142157917992041, guid: c8983fd33b77d8d4bab49a9c8e343747, type: 3}
 --- !u!1 &100442468
 GameObject:
   m_ObjectHideFlags: 0
@@ -338,6 +339,7 @@ MonoBehaviour:
   _score: 0
   _ammo: 15
   _isTripleShotActive: 0
+  _isMultiDirectionActive: 0
   _isShieldActive: 0
   _shieldStrength: 3
   _laserSpawnOffset: 0.8
@@ -347,6 +349,8 @@ MonoBehaviour:
   _laserPrefab: {fileID: 1760181307381912856, guid: 6f429864e8da62546937ecaf1872da64,
     type: 3}
   _tripleShotPrefab: {fileID: 5167324770849125687, guid: beac16b37b90edb4d9fe085d48d170b5,
+    type: 3}
+  _multiDirectionPrefab: {fileID: 375550661832542827, guid: e760ebf74882ee54bad0123862d872d7,
     type: 3}
   _shieldVisualizer: {fileID: 2106459076}
   _leftEngineFailure: {fileID: 1707123171}
