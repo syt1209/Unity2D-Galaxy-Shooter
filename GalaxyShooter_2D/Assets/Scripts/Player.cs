@@ -155,6 +155,27 @@ public class Player : MonoBehaviour
         _uiManager.UpdateAmmoImage(_ammo);
     }
 
+    private void LifeVisual()
+    {
+        _uiManager.UpdateLifeImage(_life);
+
+        switch (_life)
+        {
+            case 1:
+                _leftEngineFailure.SetActive(true);
+                _rightEngineFailure.SetActive(true);
+                break;
+            case 2:
+                _leftEngineFailure.SetActive(true);
+                _rightEngineFailure.SetActive(false);
+                break;
+            default:
+                _leftEngineFailure.SetActive(false);
+                _rightEngineFailure.SetActive(false);
+                break;
+        }
+    }
+
     // public methods
     public void Damage()
     {
@@ -181,23 +202,8 @@ public class Player : MonoBehaviour
 
         StartCoroutine(_cameraShake.CameraShakeRoutine(_shakeDuration));
         _life--;
-        _uiManager.UpdateLifeImage(_life);
 
-        switch (_life)
-        {
-            case 1:
-                _leftEngineFailure.SetActive(true);
-                _rightEngineFailure.SetActive(true);
-                break;
-            case 2:
-                _leftEngineFailure.SetActive(true);
-                _rightEngineFailure.SetActive(false);
-                break;
-            default:
-                _leftEngineFailure.SetActive(false);
-                _rightEngineFailure.SetActive(false);
-                break;
-        }
+        LifeVisual();
 
         if (_life < 1)
         {
@@ -251,5 +257,14 @@ public class Player : MonoBehaviour
     public void AmmoCollected()
     {
         _ammo = 15;
+    }
+
+    public void LifeCollected()
+    {
+        if (_life < 3)
+        {
+            _life++;
+            LifeVisual();
+        }
     }
 }

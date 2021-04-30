@@ -68,6 +68,9 @@ public class Powerup : MonoBehaviour
                     case 3:
                         player.AmmoCollected();
                         break;
+                    case 4:
+                        player.LifeCollected();
+                        break;
                     default:
                         Debug.Log("ID" + _powerupID + "not found");
                         break;
