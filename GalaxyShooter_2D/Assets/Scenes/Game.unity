@@ -174,6 +174,7 @@ MonoBehaviour:
   - {fileID: 2651010886289341821, guid: fa5cb65bc04ca1741ae53cc0781658d5, type: 3}
   - {fileID: 7107151353808627993, guid: 1f29c3c54b719f04d9e8e5f6b4260884, type: 3}
   - {fileID: 7665142157917992041, guid: c8983fd33b77d8d4bab49a9c8e343747, type: 3}
+  - {fileID: 7855977524608868355, guid: 9531276c9d6203e44a2b230d97a0fac7, type: 3}
 --- !u!1 &100442468
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,6 +342,7 @@ MonoBehaviour:
   _isTripleShotActive: 0
   _isMultiDirectionActive: 0
   _isShieldActive: 0
+  _isMissileActive: 0
   _shieldStrength: 3
   _laserSpawnOffset: 0.8
   _firingDelay: 0.15
@@ -351,6 +353,8 @@ MonoBehaviour:
   _tripleShotPrefab: {fileID: 5167324770849125687, guid: beac16b37b90edb4d9fe085d48d170b5,
     type: 3}
   _multiDirectionPrefab: {fileID: 375550661832542827, guid: e760ebf74882ee54bad0123862d872d7,
+    type: 3}
+  _missilePrefab: {fileID: 2946432429909746360, guid: cbc9f585515eeb143a6b7fc173a9c3f4,
     type: 3}
   _shieldVisualizer: {fileID: 2106459076}
   _leftEngineFailure: {fileID: 1707123171}
@@ -2347,6 +2351,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Asteroid
+      objectReference: {fileID: 0}
+    - target: {fileID: 5931399421095308575, guid: 332822a175e265645aeb32b7a13b7a9e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 332822a175e265645aeb32b7a13b7a9e, type: 3}

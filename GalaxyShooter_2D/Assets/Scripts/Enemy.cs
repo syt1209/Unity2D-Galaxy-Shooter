@@ -74,6 +74,13 @@ public class Enemy : MonoBehaviour
 
             EnemyDeathSequence();
         }
+
+        if (other.tag is "Missile")
+        {
+            Destroy(other.gameObject);
+
+            EnemyDeathSequence();
+        }
     }
 
     private void EnemyDeathSequence()

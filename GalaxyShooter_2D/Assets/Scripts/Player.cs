@@ -11,7 +11,8 @@ public class Player : MonoBehaviour
     private float _minSpeed = 3.5f, _maxSpeed = 7.0f;
     private float _speedMultipler = 2f;
     [SerializeField] private int _life = 3, _score = 0, _ammo = 15;
-    [SerializeField] private bool _isTripleShotActive = false, _isMultiDirectionActive = false, _isShieldActive = false; 
+    [SerializeField] private bool _isTripleShotActive = false, _isMultiDirectionActive = false, _isShieldActive = false,
+                                  _isMissileActive = false; 
     private WaitForSeconds _powerDownTime = new WaitForSeconds(5.0f);
     [SerializeField] private int _shieldStrength = 3;
 
@@ -24,7 +25,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _shakeDuration = 0.5f;
 
     // cached references
-    [SerializeField] private GameObject _laserPrefab, _tripleShotPrefab, _multiDirectionPrefab;
+    [SerializeField] private GameObject _laserPrefab, _tripleShotPrefab, _multiDirectionPrefab, _missilePrefab;
     [SerializeField] private GameObject _shieldVisualizer;
     [SerializeField] private GameObject _leftEngineFailure, _rightEngineFailure;
     [SerializeField] private AudioClip _laserSoundClip, _ammoOutSoundClip;
@@ -151,6 +152,15 @@ public class Player : MonoBehaviour
                 return;
             }
 
+            // Missile
+            if (_isMissileActive is true)
+            {
+                Instantiate(_missilePrefab, transform.position, Quaternion.identity);
+                _audioSource.Play();
+                _isMissileActive = false;
+                return;
+            }
+
             Instantiate(_laserPrefab, transform.position + new Vector3(0, _laserSpawnOffset, 0), Quaternion.identity);
             _audioSource.Play();
             _nextFire = Time.time + _firingDelay;
@@ -234,6 +244,7 @@ public class Player : MonoBehaviour
     {
         _isTripleShotActive = true;
         _isMultiDirectionActive = false;
+        _isMissileActive = false;
         StartCoroutine(SpecialWeaponPowerDownRoutine(_isTripleShotActive));
     }
 
@@ -241,7 +252,15 @@ public class Player : MonoBehaviour
     {
         _isMultiDirectionActive = true;
         _isTripleShotActive = false;
+        _isMissileActive = false;
         StartCoroutine(SpecialWeaponPowerDownRoutine(_isMultiDirectionActive));
+    }
+
+    public void MissileActive()
+    {
+        _isMissileActive = true;
+        _isTripleShotActive = false;
+        _isMultiDirectionActive = false;
     }
 
     private IEnumerator SpecialWeaponPowerDownRoutine(bool isWeaponActive)

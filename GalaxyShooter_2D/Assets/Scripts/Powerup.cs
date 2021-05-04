@@ -74,6 +74,9 @@ public class Powerup : MonoBehaviour
                     case 5:
                         player.MultiDirectionActive();
                         break;
+                    case 6:
+                        player.MissileActive();
+                        break;
                     default:
                         Debug.Log("ID" + _powerupID + "not found");
                         break;
