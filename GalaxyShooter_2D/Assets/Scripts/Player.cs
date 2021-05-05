@@ -284,6 +284,19 @@ public class Player : MonoBehaviour
         _speed /= _speedMultipler;
     }
 
+    // Speed slowdown powerup - negative
+    public void SlowDownActive()
+    {
+        _speed /= _speedMultipler;
+        StartCoroutine(SpeedRecoverRoutine());
+    }
+
+    private IEnumerator SpeedRecoverRoutine()
+    {
+        yield return _powerDownTime;
+        _speed *= _speedMultipler;
+    }
+
     // Shield powerup
     public void ShieldActive()
     {

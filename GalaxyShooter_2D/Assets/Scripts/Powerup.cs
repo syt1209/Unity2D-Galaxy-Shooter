@@ -77,6 +77,9 @@ public class Powerup : MonoBehaviour
                     case 6:
                         player.MissileActive();
                         break;
+                    case 7:
+                        player.SlowDownActive();
+                        break;
                     default:
                         Debug.Log("ID" + _powerupID + "not found");
                         break;
