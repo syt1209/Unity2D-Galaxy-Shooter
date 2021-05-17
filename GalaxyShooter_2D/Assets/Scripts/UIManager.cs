@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     // cached reference
-    [SerializeField] private Text _scoreText, _gameoverText, _restartText;
+    [SerializeField] private Text _scoreText, _gameoverText, _restartText, _levelText, _waveText;
     [SerializeField] private Image _lifeImage, _thrusterFillImage, _ammoImage;
     [SerializeField] private GameManager _gameManager;
 
@@ -24,6 +24,14 @@ public class UIManager : MonoBehaviour
     public void UpdateScoreText(int score)
     {
         _scoreText.text = "Score: " + score.ToString();
+    }
+    public void UpdateLevelText(int level)
+    {
+        _levelText.text = "Level: " + level.ToString();
+    }
+    public void UpdateWaveText(int wave)
+    {
+        _waveText.text = "Wave: " + wave.ToString();
     }
 
     public void UpdateLifeImage(int life)

@@ -7,6 +7,8 @@ public class SpawnManager : MonoBehaviour
     // config variables
     [SerializeField]
     private WaitForSeconds _enemySpawnDelay = new WaitForSeconds(3.0f);
+    private WaitForSeconds _waveSpawnDelay = new WaitForSeconds(3.0f);
+    private WaitForSeconds _levelSpawnDelay = new WaitForSeconds(3.0f);
     private WaitForSeconds _powerupSpawnDelay = new WaitForSeconds(7.0f);
     private bool _stopSpawning = false;
     private int _powerupID;
@@ -20,33 +22,97 @@ public class SpawnManager : MonoBehaviour
         5   // Life (ID=7)
     };
 
+    // Enums
+    private enum EnemyTypes
+    { 
+        Normal,        // level I
+        Smart,         // level II
+        Aggressive,    // level III
+        Boss           // level IV
+    }
+
+    private enum SpawnTypes
+    { 
+        Wave,         // level I to III
+        Once          // level IV
+    }
+    // End of Enums
+
+    // Enemy level and wave configs
+    private int _level = 1;
+
+    private int _currentWaveID = 0;
+    private int _totalWaves = 3;
+    private int[] _enemiesInWaves = { 3, 5, 7 };
+
+    // End of enemy level and wave configs
+
     // cached reference
     [SerializeField]
     private GameObject _enemyPrefab;
     private Transform _enemyContainer;
     [SerializeField]
     private GameObject[] _powerupPrefabs;
+    private UIManager _uiManager;
 
     // Start is called before the first frame update
     void Start()
     {
         _enemyContainer = transform.Find("EnemyContainer").GetComponent<Transform>();
+
+        _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+        if (_uiManager is null)
+        {
+            Debug.LogError("UIManager is NULL");
+        }
     }
 
-    // private methods
 
-    // Enemy related
+    // PRIVATE METHODS
+
+    // Enemy spawning  
     private IEnumerator EnemySpawnRoutine()
     {
         yield return new WaitForSeconds(2.0f);
         while (_stopSpawning is false)
         {
-            Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
-            GameObject _newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity, _enemyContainer);
+            _uiManager.UpdateLevelText(_level);
 
-            yield return _enemySpawnDelay;
+            int spawnedEnemyInWave = 0;
+            while (_currentWaveID < _totalWaves)
+            {
+                int totalEnemyInWave = _enemiesInWaves[_currentWaveID];
+                _uiManager.UpdateWaveText(_currentWaveID + 1);
+
+                while (spawnedEnemyInWave < totalEnemyInWave)
+                {
+                    Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
+                    GameObject _newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity, _enemyContainer);
+
+                    spawnedEnemyInWave++;
+                    Debug.Log("spawned Enemy in wave: " + spawnedEnemyInWave);
+
+                    yield return _enemySpawnDelay;
+                }
+            
+                int enemyAlive = _enemyContainer.childCount;
+                Debug.Log(enemyAlive);
+                if (enemyAlive == 0)
+                {
+                    _currentWaveID++;
+                    spawnedEnemyInWave = 0;
+                }
+
+                yield return _waveSpawnDelay;
+            }
+
+            _level++;
+            _currentWaveID = 0;
+
+            yield return _levelSpawnDelay;
         }
     }
+    // End of enemy spawning settings
 
     // Powerup spawning
     private IEnumerator PowerUpSpawnRoutine()
@@ -56,7 +122,6 @@ public class SpawnManager : MonoBehaviour
         { 
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
             GameObject _newTripleShotPowerup = Instantiate(_powerupPrefabs[PowerupSelector()], posToSpawn, Quaternion.identity);
-            Debug.Log(_powerupID);
 
             yield return _powerupSpawnDelay;
         }
