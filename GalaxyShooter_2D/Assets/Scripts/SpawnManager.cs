@@ -96,7 +96,6 @@ public class SpawnManager : MonoBehaviour
                 }
             
                 int enemyAlive = _enemyContainer.childCount;
-                Debug.Log(enemyAlive);
                 if (enemyAlive == 0)
                 {
                     _currentWaveID++;

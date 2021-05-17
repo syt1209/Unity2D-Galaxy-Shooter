@@ -57,28 +57,28 @@ public class Powerup : MonoBehaviour
                 switch (_powerupID)
                 {
                     case 0:
-                        player.TripleShotActive();
-                        break;
-                    case 1:
-                        player.SpeedBoostActive();
-                        break;
-                    case 2:
-                        player.ShieldActive();
-                        break;
-                    case 3:
                         player.AmmoCollected();
                         break;
-                    case 4:
-                        player.LifeCollected();
+                    case 1:
+                        player.TripleShotActive();
                         break;
-                    case 5:
+                    case 2:
                         player.MultiDirectionActive();
                         break;
-                    case 6:
+                    case 3:
                         player.MissileActive();
                         break;
-                    case 7:
+                    case 4:
+                        player.ShieldActive();
+                        break;
+                    case 5:
+                        player.SpeedBoostActive();
+                        break;
+                    case 6:
                         player.SlowDownActive();
+                        break;
+                    case 7:
+                        player.LifeCollected();
                         break;
                     default:
                         Debug.Log("ID" + _powerupID + "not found");
