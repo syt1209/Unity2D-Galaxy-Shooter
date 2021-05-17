@@ -165,7 +165,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1aac47d655fd054594766e6fc6e9bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _level: 3
   _enemyPrefab: {fileID: 3488262364974512200, guid: 0807c55488845dc4f95001cc5d138803,
+    type: 3}
+  _smartEnemyPrefab: {fileID: 428094786105133177, guid: 7bb8969861590224f9187e845883042b,
+    type: 3}
+  _aggressiveEnemyPrefab: {fileID: 8403154338610477915, guid: 58ce297cc0a5aef458c138d417858271,
+    type: 3}
+  _bossPrefab: {fileID: 8415265735559357791, guid: a2581b68cf4ed244890a79d34b1c8185,
     type: 3}
   _powerupPrefabs:
   - {fileID: 2651010886289341821, guid: fa5cb65bc04ca1741ae53cc0781658d5, type: 3}

@@ -28,6 +28,10 @@ public class UIManager : MonoBehaviour
     public void UpdateLevelText(int level)
     {
         _levelText.text = "Level: " + level.ToString();
+        if (level == 4)
+        {
+            _waveText.text = "Final Wave";
+        }
     }
     public void UpdateWaveText(int wave)
     {
