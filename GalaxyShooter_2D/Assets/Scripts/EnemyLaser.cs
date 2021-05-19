@@ -4,17 +4,27 @@ using UnityEngine;
 
 public class EnemyLaser : Laser
 {
+    private bool _shootBackward = false;
+    
     protected override void Move()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
-        if (transform.position.y < -_maxPos)
+        if (_shootBackward is true)
         {
-            if (transform.parent != null)
+            base.Move();
+        }
+
+        else
+        {
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+
+            if (transform.position.y < -_maxPos)
             {
-                Destroy(transform.parent.gameObject);
+                if (transform.parent != null)
+                {
+                    Destroy(transform.parent.gameObject);
+                }
+                Destroy(this.gameObject);
             }
-            Destroy(this.gameObject);
         }
     }
 
@@ -25,5 +35,15 @@ public class EnemyLaser : Laser
             Player player = other.GetComponent<Player>();
             player.Damage();
         }
+    }
+
+    public void ShootBackward()
+    {
+        _shootBackward = true;
+    }
+
+    public void ShootForward()
+    {
+        _shootBackward = false;
     }
 }

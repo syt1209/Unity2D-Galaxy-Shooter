@@ -21,7 +21,21 @@ public class SmartEnemy : Enemy
     {
         while (true)
         {
-            Instantiate(laser, transform.position + _offset, Quaternion.identity);
+            GameObject enemyLaserObject = Instantiate(laser, transform.position + _offset, Quaternion.identity) as GameObject;
+            EnemyLaser enemyLaser = enemyLaserObject.GetComponent<EnemyLaser>();
+            if (_player != null)
+            {
+                if (_player.transform.position.y > transform.position.y)
+                {
+                    enemyLaser.ShootBackward();
+                }
+
+                else
+                {
+                    enemyLaser.ShootForward();
+                }
+            }
+
             yield return _firingDelay;
         }
     }

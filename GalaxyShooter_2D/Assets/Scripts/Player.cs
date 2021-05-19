@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     // config variables
     [SerializeField] private float _laserSpawnOffset = 0.8f;
     private float _xMin = -11.3f, _xMax = 11.3f;
-    private float _yMin = -3.8f,  _yMax = 0;
+    private float _yMin = -3.8f,  _yMax = 3.8f;
     [SerializeField] private float _firingDelay = 0.15f, _thrustDelay = 1f;
     private float _nextFire = -1f, _nextThrust = -1f;
     [SerializeField] private float _shakeDuration = 0.5f;
