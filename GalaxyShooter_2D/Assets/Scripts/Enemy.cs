@@ -7,7 +7,11 @@ public class Enemy : MonoBehaviour
     // state variables
     [SerializeField] private float _enemySpeed = 4.0f;
     [SerializeField] private int _enemyPoints = 10;
-    private float _yMin = -5f, _yMax = 7f, _xMin = -8f, _xMax = 8f;
+    //private float _yMin = -5f, _yMax = 7f, _xMin = -8f, _xMax = 8f;
+
+    // config variables
+    [SerializeField] private Transform _path;
+    private int _currentPointOnPath = 0;
 
     // cached reference
     private Player _player;
@@ -45,9 +49,32 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveDown();
+        //MoveDown();
+        MoveAlongPath(_path);
     }
 
+    private void MoveAlongPath(Transform path)
+    {
+        List<Transform> pointsOnPath = new List<Transform>();
+        foreach (Transform child in path)
+        {
+            pointsOnPath.Add(child);
+        }
+
+        Vector3 currentPos = transform.position;
+        Vector3 currentTarget = pointsOnPath[_currentPointOnPath].position;
+        transform.position = Vector3.MoveTowards(currentPos, currentTarget, _enemySpeed * Time.deltaTime);
+    }
+
+    public void UpdateCurrentPointOnPath(int pointID)
+    {
+        if (pointID == (_path.childCount - 1))
+        { _currentPointOnPath = 0; }
+        else
+        { _currentPointOnPath++; }
+    }
+
+    /*
     private void MoveDown()
     {
         transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
@@ -58,6 +85,7 @@ public class Enemy : MonoBehaviour
             transform.position = new Vector3(_randomX, _yMax, 0);
         }
     }
+    */
 
     private void OnTriggerEnter(Collider other)
     {
