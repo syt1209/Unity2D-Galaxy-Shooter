@@ -5,21 +5,21 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     // state variables
-    [SerializeField] private float _enemySpeed = 4.0f;
-    [SerializeField] private int _enemyPoints = 10;
+    [SerializeField] protected float _enemySpeed = 4.0f;
+    [SerializeField] protected int _enemyPoints = 10;
     //private float _yMin = -5f, _yMax = 7f, _xMin = -8f, _xMax = 8f;
 
     // config variables
-    [SerializeField] private Transform _path;
-    private int _currentPointOnPath = 0;
+    [SerializeField] protected Transform _path;
+    protected int _currentPointOnPath = 0;
 
     // cached reference
-    private Player _player;
-    private Animator _anim;
-    private Collider _collider;
+    protected Player _player;
+    protected Animator _anim;
+    protected Collider _collider;
     private AudioSource _audioSource;
 
-    private void Start()
+    protected virtual void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         if (_player is null)
@@ -47,13 +47,13 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         //MoveDown();
         MoveAlongPath(_path);
     }
 
-    private void MoveAlongPath(Transform path)
+    protected void MoveAlongPath(Transform path)
     {
         List<Transform> pointsOnPath = new List<Transform>();
         foreach (Transform child in path)
@@ -71,7 +71,7 @@ public class Enemy : MonoBehaviour
         if (pointID == (_path.childCount - 1))
         { _currentPointOnPath = 0; }
         else
-        { _currentPointOnPath++; }
+        { _currentPointOnPath = pointID + 1; }
     }
 
     /*
@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour
     }
     */
 
-    private void OnTriggerEnter(Collider other)
+    protected void OnTriggerEnter(Collider other)
     {
         if (other.tag is "Player") 
         {
@@ -111,7 +111,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void EnemyDeathSequence()
+    protected void EnemyDeathSequence()
     {
         _player.AddScore(_enemyPoints);
 

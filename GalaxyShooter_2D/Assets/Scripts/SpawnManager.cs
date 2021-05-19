@@ -88,10 +88,10 @@ public class SpawnManager : MonoBehaviour
                     {
                         Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
                         GameObject _newEnemy = Instantiate(EnemyForLevel(_level), posToSpawn, Quaternion.identity, _enemyContainer);
-                        Debug.Log(EnemyForLevel(_level).name);
+                        //Debug.Log(EnemyForLevel(_level).name);
 
                         spawnedEnemyInWave++;
-                        Debug.Log("spawned Enemy in wave: " + spawnedEnemyInWave);
+                        //Debug.Log("spawned Enemy in wave: " + spawnedEnemyInWave);
 
                         yield return _enemySpawnDelay;
                     }

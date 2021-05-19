@@ -6,16 +6,16 @@ public class Laser : MonoBehaviour
 {
     // state variable
     [SerializeField]
-    private float _speed = 8.0f;
-    private float _maxPos = 8.0f;
+    protected float _speed = 8.0f;
+    protected float _maxPos = 8.0f;
     
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         Move();
     }
 
-    private void Move()
+    protected virtual void Move()
     {
         transform.Translate(Vector3.up * _speed * Time.deltaTime);
 
