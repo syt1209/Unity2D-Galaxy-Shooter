@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1844961504}
   - component: {fileID: 1844961505}
-  - component: {fileID: 2601523189758248556}
+  - component: {fileID: 8266721258305141299}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1844961503}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.15, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.9, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8890897021794051745}
   m_RootOrder: 0
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: -104253607
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a7741184b1f06f146bba6b0392d1b0bf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 99a456116a22abc44a854fba2603d550, type: 3}
   m_Color: {r: 0.8983862, g: 0.9529412, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &2601523189758248556
+--- !u!95 &8266721258305141299
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -147,8 +147,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.7674118, y: 2.534824, z: 1}
-  m_Center: {x: -0.0913586, y: -0.018271685, z: 0}
+  m_Size: {x: 1.0715808, y: 1.631465, z: 1}
+  m_Center: {x: 0.00019818544, y: 0.006143093, z: 0}
 --- !u!82 &1556053132
 AudioSource:
   m_ObjectHideFlags: 0
@@ -169,7 +169,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.7680564
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0

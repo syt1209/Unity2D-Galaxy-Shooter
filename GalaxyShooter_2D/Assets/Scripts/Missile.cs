@@ -58,7 +58,6 @@ public class Missile : MonoBehaviour
         _rb.velocity = transform.up * _speed * Time.deltaTime;
         Vector3 direction = (_target.position - _rb.position).normalized;
         float rotateAmplitude = Vector3.Cross(direction, transform.up).z;
-        Debug.Log(rotateAmplitude);
         _rb.angularVelocity = new Vector3(0, 0, -rotateAmplitude * _rotateSpeed);
     }
 }

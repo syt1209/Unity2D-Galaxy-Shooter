@@ -4,7 +4,34 @@ using UnityEngine;
 
 public class AggressiveEnemy : Enemy
 {
-    [SerializeField] private bool _aggressive = false;
+    // state variables
+    private bool _aggressive = false;
+    private float _colliderXsize = 2.0f;
+    private float _dodgeMagnitude = 2.0f;
+
+    // cached reference
+    private GameObject _laser;
+
+    protected override void Start()
+    {
+        base.Start();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+        _laser = GameObject.FindGameObjectWithTag("Laser");
+        if (_laser is null)
+        {
+            Debug.Log("No laser detected");
+        }
+        else
+        {
+            DodgingStatus(_laser.transform.localPosition);
+        }
+
+    }
 
     protected override void MoveAlongPath(Transform path)
     {
@@ -37,6 +64,31 @@ public class AggressiveEnemy : Enemy
         {
             _aggressive = false;
         }
+    }
+
+    private void DodgingStatus(Vector3 laserPos)
+    {
+        Vector3 currentPos = transform.localPosition;
+        float x_distance = laserPos.x - currentPos.x;
+        float y_distance = currentPos.y - laserPos.y;
+
+        if (y_distance < 2.0f)
+        {
+
+            if (x_distance < 0 && x_distance >-_colliderXsize/2)
+            {
+                Debug.Log("Dodging right");
+                transform.position = new Vector3(currentPos.x + _dodgeMagnitude, currentPos.y, currentPos.z);
+            }
+
+            else if (x_distance > 0 && x_distance < _colliderXsize/2)
+            {
+                Debug.Log("Dodging left");
+                transform.position = new Vector3(currentPos.x - _dodgeMagnitude, currentPos.y, currentPos.z);
+            }
+
+        }
+
     }
 }
 

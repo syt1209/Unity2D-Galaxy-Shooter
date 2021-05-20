@@ -8,7 +8,13 @@ public class Laser : MonoBehaviour
     [SerializeField]
     protected float _speed = 8.0f;
     protected float _maxPos = 8.0f;
-    
+
+    private void Start()
+    {
+        
+        
+    }
+
     // Update is called once per frame
     protected virtual void Update()
     {
