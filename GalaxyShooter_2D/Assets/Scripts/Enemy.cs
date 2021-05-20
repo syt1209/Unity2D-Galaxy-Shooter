@@ -7,11 +7,12 @@ public class Enemy : MonoBehaviour
     // state variables
     [SerializeField] protected float _enemySpeed = 4.0f;
     [SerializeField] protected int _enemyPoints = 10;
-    //private float _yMin = -5f, _yMax = 7f, _xMin = -8f, _xMax = 8f;
+    protected float _yMin = -5f, _yMax = 7f, _xMin = -8f, _xMax = 8f;
 
     // config variables
     [SerializeField] protected Transform _path;
     protected int _currentPointOnPath = 0;
+    protected Vector3 _currentTarget;
 
     // cached reference
     protected Player _player;
@@ -49,11 +50,10 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        //MoveDown();
         MoveAlongPath(_path);
     }
 
-    protected void MoveAlongPath(Transform path)
+    protected virtual void MoveAlongPath(Transform path)
     {
         List<Transform> pointsOnPath = new List<Transform>();
         foreach (Transform child in path)
@@ -62,8 +62,8 @@ public class Enemy : MonoBehaviour
         }
 
         Vector3 currentPos = transform.position;
-        Vector3 currentTarget = pointsOnPath[_currentPointOnPath].position;
-        transform.position = Vector3.MoveTowards(currentPos, currentTarget, _enemySpeed * Time.deltaTime);
+        _currentTarget = pointsOnPath[_currentPointOnPath].position;
+        transform.position = Vector3.MoveTowards(currentPos, _currentTarget, _enemySpeed * Time.deltaTime);
     }
 
     public void UpdateCurrentPointOnPath(int pointID)
@@ -74,18 +74,6 @@ public class Enemy : MonoBehaviour
         { _currentPointOnPath = pointID + 1; }
     }
 
-    /*
-    private void MoveDown()
-    {
-        transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
-
-        if (transform.position.y < _yMin)
-        {
-            float _randomX = Random.Range(_xMin, _xMax);
-            transform.position = new Vector3(_randomX, _yMax, 0);
-        }
-    }
-    */
 
     protected void OnTriggerEnter(Collider other)
     {
