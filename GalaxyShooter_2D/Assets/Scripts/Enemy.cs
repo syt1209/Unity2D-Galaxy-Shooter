@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     // state variables
     [SerializeField] protected float _enemySpeed = 4.0f;
     [SerializeField] protected int _enemyPoints = 10;
+    protected int _enemyLife = 1;
     protected float _yMin = -5f, _yMax = 7f, _xMin = -8f, _xMax = 8f;
 
     // config variables
@@ -75,27 +76,39 @@ public class Enemy : MonoBehaviour
     }
 
 
-    protected void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.tag is "Player") 
         {
             _player.Damage();
+            _enemyLife--;
 
-            EnemyDeathSequence();
+            if (_enemyLife < 1)
+            {
+                EnemyDeathSequence();
+            }
         }
 
         if (other.tag is "Laser")
         {
             Destroy(other.gameObject);
+            _enemyLife--;
 
-            EnemyDeathSequence();
+            if (_enemyLife < 1)
+            {
+                EnemyDeathSequence();
+            }
         }
 
         if (other.tag is "Missile")
         {
             Destroy(other.gameObject);
+            _enemyLife--;
 
-            EnemyDeathSequence();
+            if (_enemyLife < 1)
+            {
+                EnemyDeathSequence();
+            }
         }
     }
 

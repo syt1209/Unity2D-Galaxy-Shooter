@@ -196,7 +196,7 @@ public class SpawnManager : MonoBehaviour
         if (_level == 4) // Boss level -- spawn once
         {
             _uiManager.UpdateLevelText(_level);
-            Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
+            Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 9, 0);
             GameObject _newEnemy = Instantiate(EnemyForLevel(_level), posToSpawn, Quaternion.identity, _enemyContainer);
 
             int enemyAlive = _enemyContainer.childCount;
