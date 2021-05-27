@@ -24,6 +24,7 @@ public class Boss : Enemy
     protected override void Update()
     {
         MoveToCenter();
+        PowerupPickup();
     }
 
     private void MoveToCenter()
@@ -56,10 +57,33 @@ public class Boss : Enemy
         }
     }
 
+    private void PowerupPickup()
+    {
+        GameObject positivePowerup = GameObject.FindGameObjectWithTag("PositivePower") as GameObject;
+        if (positivePowerup != null)
+        {
+            Vector3 powerupPosition = positivePowerup.transform.localPosition;
+            if (powerupPosition.y < transform.position.y && powerupPosition.x < 2.5f && powerupPosition.x > -2.5f)
+            {
+                Vector3 bossPosition = transform.position;
+                positivePowerup.transform.position = Vector3.MoveTowards(powerupPosition, bossPosition, 10.0f*Time.deltaTime);
+
+                float distance = (bossPosition - positivePowerup.transform.position).magnitude;
+                if (distance < 0.5f)
+                {
+                    Destroy(positivePowerup.gameObject, 0.5f);
+                }
+            }
+        }
+    }
+
     protected override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
-        if (_enemyLife > 0)
+        if (other.CompareTag("PositivePower") || other.CompareTag("NegativePower"))
+        {
+            return;
+        }
+        else if (_enemyLife > 0)
         {
             if (_shield.active)
             {
@@ -68,38 +92,7 @@ public class Boss : Enemy
             }
             else
             {
-                if (other.tag is "Player")
-                {
-                    _player.Damage();
-                    _enemyLife--;
-
-                    if (_enemyLife < 1)
-                    {
-                        EnemyDeathSequence();
-                    }
-                }
-
-                if (other.tag is "Laser")
-                {
-                    Destroy(other.gameObject);
-                    _enemyLife--;
-
-                    if (_enemyLife < 1)
-                    {
-                        EnemyDeathSequence();
-                    }
-                }
-
-                if (other.tag is "Missile")
-                {
-                    Destroy(other.gameObject);
-                    _enemyLife--;
-
-                    if (_enemyLife < 1)
-                    {
-                        EnemyDeathSequence();
-                    }
-                }
+                base.OnTriggerEnter(other);
             }
         }
         else

@@ -9,6 +9,8 @@ TagManager:
   - Missile
   - EnemyLaser
   - Boss
+  - PositivePower
+  - NegativePower
   layers:
   - Default
   - TransparentFX
