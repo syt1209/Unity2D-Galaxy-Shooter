@@ -14,6 +14,7 @@ public class SmartEnemy : Enemy
     protected override void Start()
     {
         base.Start();
+        _enemyPoints = 50;
         StartCoroutine(FireRoutine(_laserPrefab));
     }
 

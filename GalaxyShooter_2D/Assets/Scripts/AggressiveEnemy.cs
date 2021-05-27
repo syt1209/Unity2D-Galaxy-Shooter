@@ -15,6 +15,7 @@ public class AggressiveEnemy : Enemy
     protected override void Start()
     {
         base.Start();
+        _enemyPoints = 80;
     }
 
     protected override void Update()
